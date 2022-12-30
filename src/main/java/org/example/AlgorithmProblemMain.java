@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 public class AlgorithmProblemMain {
     public static final int BINARY_SEARCH = 1;
+    public static final int INSERTION_SORT = 2;
     public static final int EXIT = 0;
 
 
@@ -22,11 +23,15 @@ public class AlgorithmProblemMain {
         while (true) {
             System.out.println("Enter your choice : " +
                     "\n1 : Search word using binary search" +
+                    "\n2 : Insertion Sort" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
                 case BINARY_SEARCH:
                     main.binarySearch();
+                    break;
+                case INSERTION_SORT:
+                    main.insertionSort();
                     break;
                 case EXIT:
                     return;
@@ -34,6 +39,24 @@ public class AlgorithmProblemMain {
                     System.out.println("invalid input");
             }
         }
+    }
+
+    private void insertionSort() {
+        String[] wordList;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter space separated array elements");
+        wordList = sc.nextLine().split("\\s");
+        for (int i = 1; i < wordList.length; ++i) {
+            String key = wordList[i];
+            int j = i - 1;
+
+            while (j >= 0 && wordList[j].compareTo(key) > 0) {
+                wordList[j + 1] = wordList[j];
+                j = j - 1;
+            }
+            wordList[j + 1] = key;
+        }
+        Arrays.stream(wordList).forEach(System.out::println);
     }
 
     void binarySearch() throws CustomException {
