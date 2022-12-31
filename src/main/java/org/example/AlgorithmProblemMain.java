@@ -17,6 +17,7 @@ public class AlgorithmProblemMain {
     public static final int BUBBLE_SORT = 3;
     public static final int ANAGRAM_STRINGS = 4;
     public static final int PRIME_NUMBERS = 5;
+    public static final int PRIME_ANAGRAM_AND_PALINDROME = 6;
     public static final int EXIT = 0;
 
 
@@ -30,6 +31,7 @@ public class AlgorithmProblemMain {
                     "\n3 : Bubble Sort" +
                     "\n4 : Check strings are anagram or not" +
                     "\n5 : Find prime numbers between 0 - 1000" +
+                    "\n6 : Find all prime anagram and palindrome" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -48,6 +50,9 @@ public class AlgorithmProblemMain {
                 case PRIME_NUMBERS:
                     main.findPrimes();
                     break;
+                case PRIME_ANAGRAM_AND_PALINDROME:
+                    main.printAllAnagramAndPalindromePrime();
+                    break;
                 case EXIT:
                     return;
                 default:
@@ -56,15 +61,27 @@ public class AlgorithmProblemMain {
         }
     }
 
-    private void findPrimes() {
+    private void printAllAnagramAndPalindromePrime() {
+
+    }
+
+    private int[] findPrimes() {
+        int[] prime = new int[168];
+        int i = 0;
         int limit = 1000;
         int number = 3;
-        System.out.println(2 + " ");
+        prime[i] = 2;
+        i++;
+        System.out.print(2 + " ");
         while (number <= limit) {
-            if (isPrime(number))
+            if (isPrime(number)) {
                 System.out.print(number + " ");
+                prime[i] = number;
+                i++;
+            }
             number++;
         }
+        return prime;
     }
 
     private boolean isPrime(int number) {
