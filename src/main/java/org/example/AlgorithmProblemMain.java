@@ -15,6 +15,8 @@ public class AlgorithmProblemMain {
     public static final int BINARY_SEARCH = 1;
     public static final int INSERTION_SORT = 2;
     public static final int BUBBLE_SORT = 3;
+
+    public static final int ANAGRAM_STRINGS = 4;
     public static final int EXIT = 0;
 
 
@@ -26,6 +28,7 @@ public class AlgorithmProblemMain {
                     "\n1 : Search word using binary search" +
                     "\n2 : Insertion Sort" +
                     "\n3 : Bubble Sort" +
+                    "\n4 : Check strings are anagram or not" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -38,12 +41,34 @@ public class AlgorithmProblemMain {
                 case BUBBLE_SORT:
                     main.bubbleSort();
                     break;
+                case ANAGRAM_STRINGS:
+                    main.isAnagram();
+                    break;
                 case EXIT:
                     return;
                 default:
                     System.out.println("invalid input");
             }
         }
+    }
+
+    private void isAnagram() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter two strings to check anagram");
+        String str1 = sc.next().toLowerCase();
+        String str2 = sc.next().toLowerCase();
+        if (str1.length() != str2.length()) {
+            System.out.println("Strings are not anagram");
+            return;
+        }
+        char[] str1CharArray = str1.toCharArray();
+        for (int i = 0; i <str1CharArray.length; i++) {
+            if(!str2.contains(""+str1CharArray[i])){
+                System.out.println("Strings are not anagram");
+                return;
+            }
+        }
+        System.out.println("Strings are anagram");
     }
 
     private void bubbleSort() {
