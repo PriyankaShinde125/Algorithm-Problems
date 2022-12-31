@@ -5,8 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -17,7 +15,8 @@ public class AlgorithmProblemMain {
     public static final int BUBBLE_SORT = 3;
     public static final int ANAGRAM_STRINGS = 4;
     public static final int PRIME_NUMBERS = 5;
-    public static final int PRIME_ANAGRAM_AND_PALINDROME = 6;
+    public static final int PRIME_ANAGRAM = 6;
+    public static final int PRIME_PALINDROME = 7;
     public static final int EXIT = 0;
 
 
@@ -31,7 +30,8 @@ public class AlgorithmProblemMain {
                     "\n3 : Bubble Sort" +
                     "\n4 : Check strings are anagram or not" +
                     "\n5 : Find prime numbers between 0 - 1000" +
-                    "\n6 : Find all prime anagram and palindrome" +
+                    "\n6 : Find all prime anagram " +
+                    "\n7 : Find all prime palindrome" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -51,10 +51,13 @@ public class AlgorithmProblemMain {
                     System.out.println(main.isAnagram(str1, str2) ? "Strings are anagram " : "Strings are not anagrams");
                     break;
                 case PRIME_NUMBERS:
-                    main.findPrimes();
+                    Arrays.stream(main.findPrimes()).forEach(System.out::println);
                     break;
-                case PRIME_ANAGRAM_AND_PALINDROME:
-                    main.printAllAnagramAndPalindromePrime();
+                case PRIME_ANAGRAM:
+                    main.printAllAnagramPrime();
+                    break;
+                case PRIME_PALINDROME:
+                    main.primePalindrome();
                     break;
                 case EXIT:
                     return;
@@ -64,7 +67,31 @@ public class AlgorithmProblemMain {
         }
     }
 
-    private void printAllAnagramAndPalindromePrime() {
+    private void primePalindrome() {
+        int[] primes = findPrimes();
+        System.out.println("Palindrome prime");
+        for (int i = 0; i < primes.length; i++) {
+            if (isPalindrome(primes[i]))
+                System.out.print(primes[i] + " ");
+        }
+        System.out.println("\n");
+    }
+
+    private boolean isPalindrome(int prime) {
+        int temp = prime;
+        int rem;
+        int reverse = 0;
+        while (prime > 0) {
+            rem = prime % 10;
+            reverse = reverse * 10 + rem;
+            prime = prime / 10;
+        }
+        if(temp == reverse)
+            return true;
+        return false;
+    }
+
+    private void printAllAnagramPrime() {
         int[] primes = findPrimes();
         System.out.println("Anagram Primes");
         for (int i = 0; i < primes.length; i++) {
@@ -82,10 +109,8 @@ public class AlgorithmProblemMain {
         int number = 3;
         primes[i] = 2;
         i++;
-        System.out.print(2 + " ");
         while (number <= limit) {
             if (isPrime(number)) {
-                System.out.print(number + " ");
                 primes[i] = number;
                 i++;
             }
@@ -103,6 +128,11 @@ public class AlgorithmProblemMain {
     }
 
     private boolean isAnagram(String str1, String str2) {
+        if (str1.equalsIgnoreCase(str2))
+            return true;
+
+        if (str1.length() == 1 && str2.length() == 1 && !str1.equalsIgnoreCase(str2))
+            return false;
         if (str1.length() != str2.length()) {
             return false;
         }
