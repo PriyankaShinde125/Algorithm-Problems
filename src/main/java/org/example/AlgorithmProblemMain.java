@@ -45,7 +45,10 @@ public class AlgorithmProblemMain {
                     main.bubbleSort();
                     break;
                 case ANAGRAM_STRINGS:
-                    main.isAnagram();
+                    System.out.println("Enter two strings");
+                    String str1 = sc.next();
+                    String str2 = sc.next();
+                    System.out.println(main.isAnagram(str1, str2) ? "Strings are anagram " : "Strings are not anagrams");
                     break;
                 case PRIME_NUMBERS:
                     main.findPrimes();
@@ -62,26 +65,33 @@ public class AlgorithmProblemMain {
     }
 
     private void printAllAnagramAndPalindromePrime() {
-
+        int[] primes = findPrimes();
+        System.out.println("Anagram Primes");
+        for (int i = 0; i < primes.length; i++) {
+            for (int j = i + 1; j < primes.length; j++) {
+                if (isAnagram(String.valueOf(primes[i]), String.valueOf(primes[j])))
+                    System.out.println(primes[i] + " " + primes[j]);
+            }
+        }
     }
 
     private int[] findPrimes() {
-        int[] prime = new int[168];
+        int[] primes = new int[168];
         int i = 0;
         int limit = 1000;
         int number = 3;
-        prime[i] = 2;
+        primes[i] = 2;
         i++;
         System.out.print(2 + " ");
         while (number <= limit) {
             if (isPrime(number)) {
                 System.out.print(number + " ");
-                prime[i] = number;
+                primes[i] = number;
                 i++;
             }
             number++;
         }
-        return prime;
+        return primes;
     }
 
     private boolean isPrime(int number) {
@@ -92,23 +102,20 @@ public class AlgorithmProblemMain {
         return true;
     }
 
-    private void isAnagram() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter two strings to check anagram");
-        String str1 = sc.next().toLowerCase();
-        String str2 = sc.next().toLowerCase();
+    private boolean isAnagram(String str1, String str2) {
         if (str1.length() != str2.length()) {
-            System.out.println("Strings are not anagram");
-            return;
+            return false;
         }
         char[] str1CharArray = str1.toCharArray();
+        char[] str2CharArray = str2.toCharArray();
+        Arrays.sort(str1CharArray);
+        Arrays.sort(str2CharArray);
         for (int i = 0; i < str1CharArray.length; i++) {
-            if (!str2.contains("" + str1CharArray[i])) {
-                System.out.println("Strings are not anagram");
-                return;
+            if (str1CharArray[i] != str2CharArray[i]) {
+                return false;
             }
         }
-        System.out.println("Strings are anagram");
+        return true;
     }
 
     private void bubbleSort() {
