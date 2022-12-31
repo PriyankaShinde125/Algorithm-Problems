@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 public class AlgorithmProblemMain {
     public static final int BINARY_SEARCH = 1;
     public static final int INSERTION_SORT = 2;
+    public static final int BUBBLE_SORT = 3;
     public static final int EXIT = 0;
 
 
@@ -24,6 +25,7 @@ public class AlgorithmProblemMain {
             System.out.println("Enter your choice : " +
                     "\n1 : Search word using binary search" +
                     "\n2 : Insertion Sort" +
+                    "\n3 : Bubble Sort" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -33,12 +35,37 @@ public class AlgorithmProblemMain {
                 case INSERTION_SORT:
                     main.insertionSort();
                     break;
+                case BUBBLE_SORT:
+                    main.bubbleSort();
+                    break;
                 case EXIT:
                     return;
                 default:
                     System.out.println("invalid input");
             }
         }
+    }
+
+    private void bubbleSort() {
+        String[] inputList;
+        int[] intList;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter space separated array elements");
+        inputList = sc.nextLine().split("\\s");
+        intList = new int[inputList.length];
+        for (int i = 0; i < inputList.length; i++) {
+            intList[i] = Integer.parseInt(inputList[i]);
+        }
+        for (int i = 0; i < intList.length; i++) {
+            for (int j = 0; j < intList.length - i - 1; j++) {
+                if (intList[j] > intList[j + 1]) {
+                    int temp = intList[j];
+                    intList[j] = intList[j + 1];
+                    intList[j + 1] = temp;
+                }
+            }
+        }
+        Arrays.stream(intList).forEach(System.out::println);
     }
 
     private void insertionSort() {
