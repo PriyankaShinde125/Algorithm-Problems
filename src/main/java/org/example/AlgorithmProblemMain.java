@@ -15,8 +15,8 @@ public class AlgorithmProblemMain {
     public static final int BINARY_SEARCH = 1;
     public static final int INSERTION_SORT = 2;
     public static final int BUBBLE_SORT = 3;
-
     public static final int ANAGRAM_STRINGS = 4;
+    public static final int PRIME_NUMBERS = 5;
     public static final int EXIT = 0;
 
 
@@ -29,6 +29,7 @@ public class AlgorithmProblemMain {
                     "\n2 : Insertion Sort" +
                     "\n3 : Bubble Sort" +
                     "\n4 : Check strings are anagram or not" +
+                    "\n5 : Find prime numbers between 0 - 1000" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -44,12 +45,34 @@ public class AlgorithmProblemMain {
                 case ANAGRAM_STRINGS:
                     main.isAnagram();
                     break;
+                case PRIME_NUMBERS:
+                    main.findPrimes();
+                    break;
                 case EXIT:
                     return;
                 default:
                     System.out.println("invalid input");
             }
         }
+    }
+
+    private void findPrimes() {
+        int limit = 1000;
+        int number = 3;
+        System.out.println(2 + " ");
+        while (number <= limit) {
+            if (isPrime(number))
+                System.out.print(number + " ");
+            number++;
+        }
+    }
+
+    private boolean isPrime(int number) {
+        for (int i = 2; i <= number / 2; i++) {
+            if (number % i == 0)
+                return false;
+        }
+        return true;
     }
 
     private void isAnagram() {
@@ -62,8 +85,8 @@ public class AlgorithmProblemMain {
             return;
         }
         char[] str1CharArray = str1.toCharArray();
-        for (int i = 0; i <str1CharArray.length; i++) {
-            if(!str2.contains(""+str1CharArray[i])){
+        for (int i = 0; i < str1CharArray.length; i++) {
+            if (!str2.contains("" + str1CharArray[i])) {
                 System.out.println("Strings are not anagram");
                 return;
             }
