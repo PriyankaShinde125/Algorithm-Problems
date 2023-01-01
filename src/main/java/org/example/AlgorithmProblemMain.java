@@ -38,7 +38,8 @@ public class AlgorithmProblemMain {
             int choice = sc.nextInt();
             switch (choice) {
                 case BINARY_SEARCH:
-                    main.binarySearch();
+                    String[] wordList = main.readDataFromFile();
+                    main.binarySearch(wordList);
                     break;
                 case INSERTION_SORT:
                     main.insertionSort();
@@ -253,13 +254,13 @@ public class AlgorithmProblemMain {
         Arrays.stream(wordList).forEach(System.out::println);
     }
 
-    void binarySearch() throws CustomException {
-        String[] wordList = readDataFromFile();
-        wordList = Arrays.stream(wordList).sorted().toArray(String[]::new);
+    @SuppressWarnings("unchecked")
+    <T extends Comparable<T>> void binarySearch(T[] wordList) throws CustomException {
+        wordList = (T[]) Arrays.stream(wordList).sorted().toArray(Comparable[]::new);
         Arrays.stream(wordList).forEach(System.out::println);
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter key to search : ");
-        String searchKey = sc.next();
+        T searchKey = (T) sc.next();
         boolean isFound = searchRecursive(wordList, 0, wordList.length, searchKey);
         if (isFound)
             System.out.println("Key found");
@@ -268,10 +269,10 @@ public class AlgorithmProblemMain {
 
     }
 
-    private boolean searchRecursive(String[] wordList, int start, int length, String searchKey) {
+    private <T extends Comparable<T>> boolean searchRecursive(T[] wordList, int start, int length, T searchKey) {
         int mid = start + (length - start) / 2;
         if (start <= length) {
-            if (searchKey.equalsIgnoreCase(wordList[mid]))
+            if (searchKey.compareTo(wordList[mid])==0)
                 return true;
             if (searchKey.compareTo(wordList[mid]) < 0) {
                 length = mid - 1;
