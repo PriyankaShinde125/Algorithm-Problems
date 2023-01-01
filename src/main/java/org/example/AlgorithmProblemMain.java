@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ public class AlgorithmProblemMain {
     public static final int PRIME_PALINDROME = 7;
     public static final int MERGE_SORT = 8;
     public static final int FIND_NUMBER = 9;
+    public static final int CUSTOMIZED_MESSAGE = 10;
     public static final int EXIT = 0;
 
 
@@ -36,6 +39,7 @@ public class AlgorithmProblemMain {
                     "\n7 : Find all prime palindrome" +
                     "\n8 : Sort using merge sort" +
                     "\n9 : Question to find number" +
+                    "\n10 : Customized message" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -70,12 +74,35 @@ public class AlgorithmProblemMain {
                 case FIND_NUMBER:
                     main.findNumber();
                     break;
+                case CUSTOMIZED_MESSAGE:
+                    main.getCustomizedMessage();
+                    break;
                 case EXIT:
                     return;
                 default:
                     System.out.println("invalid input");
             }
         }
+    }
+
+    private void getCustomizedMessage() {
+        String message = "Hello <<name>>, We have your full\n" +
+                "name as <<full name>> in our system. your contact number is 91-xxxxxxxxxx.\n" +
+                "Please,let us know in case of any clarification Thank you BridgeLabz 01/01/2016.";
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter your first name ");
+        String firstName = sc.next();
+        System.out.println("Enter your last name");
+        String lastName = sc.next();
+        System.out.println("Enter your mobile number");
+        String mobileNumber = sc.next();
+        message = message.replaceAll("<<name>>", firstName);
+        message = message.replaceAll("<<full name>>", firstName + " " + lastName);
+        message = message.replaceAll("xxxxxxxxxx", mobileNumber);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        message = message.replaceAll("[0-9]{1,2}\\/[0-9]{1,2}\\/[0-9]{4}", dtf.format(now));
+        System.out.println(message);
     }
 
     private void findNumber() {
