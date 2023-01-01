@@ -215,20 +215,16 @@ public class AlgorithmProblemMain {
         return true;
     }
 
-    private void bubbleSort() {
-        String[] inputList;
-        int[] intList;
+    @SuppressWarnings("unchecked")
+    private <T extends Comparable<T>> void bubbleSort() {
+        T[] intList;
         Scanner sc = new Scanner(System.in);
         System.out.println("enter space separated array elements");
-        inputList = sc.nextLine().split("\\s");
-        intList = new int[inputList.length];
-        for (int i = 0; i < inputList.length; i++) {
-            intList[i] = Integer.parseInt(inputList[i]);
-        }
+        intList = (T[]) sc.nextLine().split("\\s");
         for (int i = 0; i < intList.length; i++) {
             for (int j = 0; j < intList.length - i - 1; j++) {
-                if (intList[j] > intList[j + 1]) {
-                    int temp = intList[j];
+                if (intList[j].compareTo(intList[j + 1]) > 0) {
+                    T temp = intList[j];
                     intList[j] = intList[j + 1];
                     intList[j + 1] = temp;
                 }
