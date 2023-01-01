@@ -17,6 +17,7 @@ public class AlgorithmProblemMain {
     public static final int PRIME_NUMBERS = 5;
     public static final int PRIME_ANAGRAM = 6;
     public static final int PRIME_PALINDROME = 7;
+    public static final int MERGE_SORT = 8;
     public static final int EXIT = 0;
 
 
@@ -32,6 +33,7 @@ public class AlgorithmProblemMain {
                     "\n5 : Find prime numbers between 0 - 1000" +
                     "\n6 : Find all prime anagram " +
                     "\n7 : Find all prime palindrome" +
+                    "\n8 : Sort using merge sort" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -59,6 +61,9 @@ public class AlgorithmProblemMain {
                 case PRIME_PALINDROME:
                     main.primePalindrome();
                     break;
+                case MERGE_SORT:
+                    main.sortListByMergeSort();
+                    break;
                 case EXIT:
                     return;
                 default:
@@ -66,6 +71,68 @@ public class AlgorithmProblemMain {
             }
         }
     }
+
+    private void sortListByMergeSort() {
+        String[] wordList;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter space separated array elements");
+        wordList = sc.nextLine().split("\\s");
+        mergeSort(wordList, 0, wordList.length - 1);
+        Arrays.stream(wordList).forEach(value -> System.out.println(value + " "));
+    }
+
+    private void mergeSort(String[] wordList, int start, int end) {
+        int mid;
+        if (start < end) {
+            mid = start + (end - start) / 2;
+            mergeSort(wordList, start, mid);
+            mergeSort(wordList, mid + 1, end);
+            merge(wordList, start, mid, end);
+        }
+    }
+
+    private void merge(String[] wordList, int start, int mid, int end) {
+
+        int leftArraySize = mid - start + 1;
+        int rightArraySize = end - mid;
+        String[] leftArray = new String[leftArraySize];
+        String[] rightArray = new String[rightArraySize];
+
+        for (int i = 0; i < leftArraySize; i++) {
+            leftArray[i] = wordList[start + i];
+        }
+        for (int i = 0; i < rightArraySize; i++) {
+            rightArray[i] = wordList[mid + 1 + i];
+        }
+
+        int mergedArrayIndex = start;
+        int i = 0;
+        int j = 0;
+
+        while (i < leftArraySize && j < rightArraySize) {
+            if (leftArray[i].compareTo(rightArray[j]) >= 0) {
+                wordList[mergedArrayIndex] = rightArray[j];
+                j++;
+            } else {
+                wordList[mergedArrayIndex] = leftArray[i];
+                i++;
+            }
+            mergedArrayIndex++;
+        }
+
+        while (i < leftArraySize) {
+            wordList[mergedArrayIndex] = leftArray[i];
+            i++;
+            mergedArrayIndex++;
+        }
+
+        while (j < rightArraySize) {
+            wordList[mergedArrayIndex] = rightArray[j];
+            j++;
+            mergedArrayIndex++;
+        }
+    }
+
 
     private void primePalindrome() {
         int[] primes = findPrimes();
@@ -86,7 +153,7 @@ public class AlgorithmProblemMain {
             reverse = reverse * 10 + rem;
             prime = prime / 10;
         }
-        if(temp == reverse)
+        if (temp == reverse)
             return true;
         return false;
     }
@@ -206,7 +273,7 @@ public class AlgorithmProblemMain {
     private boolean searchRecursive(String[] wordList, int start, int length, String searchKey) {
         int mid = start + (length - start) / 2;
         if (start <= length) {
-            if (searchKey.equalsIgnoreCase(wordList[mid]) || searchKey.equalsIgnoreCase(wordList[start]) || searchKey.equalsIgnoreCase(wordList[length - 1]))
+            if (searchKey.equalsIgnoreCase(wordList[mid]))
                 return true;
             if (searchKey.compareTo(wordList[mid]) < 0) {
                 length = mid - 1;
