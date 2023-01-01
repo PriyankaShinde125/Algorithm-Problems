@@ -81,7 +81,7 @@ public class AlgorithmProblemMain {
         Arrays.stream(wordList).forEach(value -> System.out.println(value + " "));
     }
 
-    private void mergeSort(String[] wordList, int start, int end) {
+    private <T extends Comparable<T>> void mergeSort(T[] wordList, int start, int end) {
         int mid;
         if (start < end) {
             mid = start + (end - start) / 2;
@@ -91,12 +91,12 @@ public class AlgorithmProblemMain {
         }
     }
 
-    private void merge(String[] wordList, int start, int mid, int end) {
-
+    @SuppressWarnings("unchecked")
+    private <T extends Comparable<T>> void merge(T[] wordList, int start, int mid, int end) {
         int leftArraySize = mid - start + 1;
         int rightArraySize = end - mid;
-        String[] leftArray = new String[leftArraySize];
-        String[] rightArray = new String[rightArraySize];
+        T[] leftArray = (T[]) new Comparable[leftArraySize];
+        T[] rightArray = (T[]) new Comparable[rightArraySize];
 
         for (int i = 0; i < leftArraySize; i++) {
             leftArray[i] = wordList[start + i];
@@ -237,13 +237,15 @@ public class AlgorithmProblemMain {
         Arrays.stream(intList).forEach(System.out::println);
     }
 
-    private void insertionSort() {
-        String[] wordList;
+    @SuppressWarnings("unchecked")
+    private <T extends Comparable<T>> void insertionSort() {
+        T[] wordList;
         Scanner sc = new Scanner(System.in);
         System.out.println("enter space separated array elements");
-        wordList = sc.nextLine().split("\\s");
+
+        wordList = (T[]) sc.nextLine().split("\\s");
         for (int i = 1; i < wordList.length; ++i) {
-            String key = wordList[i];
+            T key = wordList[i];
             int j = i - 1;
 
             while (j >= 0 && wordList[j].compareTo(key) > 0) {
