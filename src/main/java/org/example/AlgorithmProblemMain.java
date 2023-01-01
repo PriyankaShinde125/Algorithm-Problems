@@ -18,6 +18,7 @@ public class AlgorithmProblemMain {
     public static final int PRIME_ANAGRAM = 6;
     public static final int PRIME_PALINDROME = 7;
     public static final int MERGE_SORT = 8;
+    public static final int FIND_NUMBER = 9;
     public static final int EXIT = 0;
 
 
@@ -34,6 +35,7 @@ public class AlgorithmProblemMain {
                     "\n6 : Find all prime anagram " +
                     "\n7 : Find all prime palindrome" +
                     "\n8 : Sort using merge sort" +
+                    "\n9 : Question to find number" +
                     "\n0 : Exit");
             int choice = sc.nextInt();
             switch (choice) {
@@ -65,12 +67,53 @@ public class AlgorithmProblemMain {
                 case MERGE_SORT:
                     main.sortListByMergeSort();
                     break;
+                case FIND_NUMBER:
+                    main.findNumber();
+                    break;
                 case EXIT:
                     return;
                 default:
                     System.out.println("invalid input");
             }
         }
+    }
+
+    private void findNumber() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a number ");
+        int n = sc.nextInt();
+        int range = (int) (Math.pow(2, n - 1));
+        System.out.println("think a number number between 0 to " + (range - 1));
+        int num = getGuessedNumber(0, range, n, 0);
+        if (num == 0) {
+            System.out.println("Number can not be identify");
+            return;
+        }
+        System.out.println("Your number is" + num);
+    }
+
+    private int getGuessedNumber(int start, int range, int n, int count) {
+        int mid = start + (range - start) / 2;
+        System.out.println(mid);
+        System.out.println("Enter 1  if number is greater than");
+        System.out.println("Enter 2  if number is less than");
+        System.out.println("Enter 0  if number is your number");
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        if (count > n) {
+            return 0;
+        }
+        if (choice == 1) {
+            start = mid + 1;
+            count++;
+            return getGuessedNumber(start, range, n, count);
+        }
+        if (choice == 2) {
+            range = mid;
+            count++;
+            return getGuessedNumber(start, range, n, count);
+        }
+        return mid;
     }
 
     private void sortListByMergeSort() {
@@ -272,7 +315,7 @@ public class AlgorithmProblemMain {
     private <T extends Comparable<T>> boolean searchRecursive(T[] wordList, int start, int length, T searchKey) {
         int mid = start + (length - start) / 2;
         if (start <= length) {
-            if (searchKey.compareTo(wordList[mid])==0)
+            if (searchKey.compareTo(wordList[mid]) == 0)
                 return true;
             if (searchKey.compareTo(wordList[mid]) < 0) {
                 length = mid - 1;
